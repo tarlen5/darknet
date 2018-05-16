@@ -21,10 +21,10 @@
 
 #ifndef CV_VERSION_EPOCH
 #include "opencv2/videoio/videoio_c.h"
-#define OPENCV_VERSION CVAUX_STR(CV_VERSION_MAJOR)""CVAUX_STR(CV_VERSION_MINOR)""CVAUX_STR(CV_VERSION_REVISION)
+#define OPENCV_VERSION CVAUX_STR(CV_VERSION_MAJOR)"" CVAUX_STR(CV_VERSION_MINOR)"" CVAUX_STR(CV_VERSION_REVISION)
 #pragma comment(lib, "opencv_world" OPENCV_VERSION ".lib")
 #else
-#define OPENCV_VERSION CVAUX_STR(CV_VERSION_EPOCH)""CVAUX_STR(CV_VERSION_MAJOR)""CVAUX_STR(CV_VERSION_MINOR)
+#define OPENCV_VERSION CVAUX_STR(CV_VERSION_EPOCH)"" CVAUX_STR(CV_VERSION_MAJOR)"" CVAUX_STR(CV_VERSION_MINOR)
 #pragma comment(lib, "opencv_core" OPENCV_VERSION ".lib")
 #pragma comment(lib, "opencv_imgproc" OPENCV_VERSION ".lib")
 #pragma comment(lib, "opencv_highgui" OPENCV_VERSION ".lib")
@@ -61,6 +61,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     if(weightfile){
       load_weights(&nets[i], weightfile);
     }
+
     if(clear) *nets[i].seen = 0;
     nets[i].learning_rate *= ngpus;
   }
@@ -432,7 +433,7 @@ void validate_detector(char *datacfg, char *cfgfile, char *weightfile, char *out
 		fprintf(fp, "\n]\n");
 		fclose(fp);
 	}
-	fprintf(stderr, "Total Detection Time: %f Seconds\n", time(0) - start);
+	fprintf(stderr, "Total Detection Time: %f Seconds\n", (double)time(0) - start);
 }
 
 void validate_detector_recall(char *datacfg, char *cfgfile, char *weightfile)
